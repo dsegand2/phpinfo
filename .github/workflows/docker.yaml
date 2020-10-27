@@ -1,0 +1,38 @@
+name: docker
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps: 
+      -
+        name: checkout
+        uses: actions/checkout@v2
+      -
+        name: phpinfo
+        run: |
+          set -x
+          docker build -t test --no-cache .
+          docker network create test
+          docker run --network test --name test -d test
+          while true
+            do
+              sleep 10
+              docker exec test ps | grep php && break
+            done   
+          while true
+            do
+              sleep 10
+              docker exec test netstat -patan | grep 8080.*LISTEN.*php && break
+            done            
+          docker rm -f test
+          docker run --network test --name test -d -p 8080:8080 test    
+          while true
+            do
+              sleep 10
+              curl localhost:8080 | grep -i php && break
+            done          
+          docker rm -f test
+          docker network rm test
