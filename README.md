@@ -1,5 +1,4 @@
-![CI](https://github.com/secobau/phpinfo/workflows/CI/badge.svg)
-![CI-swarm](https://github.com/secobau/phpinfo/workflows/CI-swarm/badge.svg)
+![docker](https://github.com/secobau/phpinfo/workflows/docker/badge.svg?branch=dev)
 
 # phpinfo
 
