@@ -12,7 +12,7 @@ FROM $image$version$digest AS clone
 ARG dir=/clone-folder
 ARG hostname=github.com
 ARG project=phpinfo
-ARG username=secobau
+ARG username=openshift-academia-online
 
 WORKDIR $dir
 RUN git clone https://$hostname/$username/$project
