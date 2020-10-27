@@ -32,7 +32,7 @@ jobs:
           while true
             do
               sleep 10
-              curl localhost:8080 | grep -i php && break
+              curl localhost:8080 | grep "PHP .* - phpinfo()" && break
             done          
           docker rm -f test
           docker network rm test
