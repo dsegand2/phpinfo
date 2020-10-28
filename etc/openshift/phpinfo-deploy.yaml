@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpinfo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpinfo
+  template:
+    metadata:
+      labels:
+        app: phpinfo
+    spec:
+      containers:
+        -
+          image: openshiftacademiaonline/phpinfo-dev:latest
+          name: php
+          ports:
+            -
+              containerPort: 8080
