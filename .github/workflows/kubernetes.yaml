@@ -48,6 +48,8 @@ jobs:
           # Debug
           docker history openshiftacademiaonline/phpinfo-dev:latest
           kubectl describe deploy
+          kubectl describe rs
+          kubectl describe po
           
           for deploy in $project
             do
