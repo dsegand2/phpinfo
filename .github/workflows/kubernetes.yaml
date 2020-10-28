@@ -50,6 +50,8 @@ jobs:
           kubectl describe deploy
           kubectl describe rs
           kubectl describe po
+          kubectl get node
+          kubectl describe node
           
           for deploy in $project
             do
