@@ -31,8 +31,8 @@ spec:
             initialDelaySeconds: 1
           resources:
             limits:
-              cpu: '0.001'
+             # cpu: '0.001'
               memory: '16Mi'
             requests:
-              cpu: '0.001'
+             # cpu: '0.001'
               memory: '16Mi'
