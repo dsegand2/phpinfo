@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpinfo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpinfo
+  template:
+    metadata:
+      labels:
+        app: phpinfo
+    spec:
+      containers:
+        -
+          image: openshiftacademiaonline/phpinfo-dev:latest
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+          name: php
+          ports:
+            -
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 1
+          resources:
+            limits:
+              cpu: '0.001'
+              memory: '32Mi'
+            requests:
+              cpu: '0.001'
+              memory: '16Mi'
