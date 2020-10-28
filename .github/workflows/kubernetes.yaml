@@ -45,6 +45,10 @@ jobs:
           
           kubectl apply -R -f etc/$mode/
           
+          # Debug
+          docker history openshiftacademiaonline/phpinfo-dev:latest
+          kubectl describe deploy
+          
           for deploy in $project
             do
               while true
