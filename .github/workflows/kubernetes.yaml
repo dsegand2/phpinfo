@@ -40,7 +40,7 @@ jobs:
           master=$( kubectl get node | grep master | awk '{ print $1 }' )
           kubectl taint node $master node-role.kubernetes.io/master:NoSchedule-
           
-          docker build -t openshiftacademiaonline/phpinfo-dev:latest --no-cache ./
+          docker build -t openshiftacademiaonline/phpinfo-dev:latest --no-cache .
           docker image ls | grep $project              
           
           kubectl apply -R -f etc/$mode/
