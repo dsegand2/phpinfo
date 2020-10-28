@@ -4,8 +4,8 @@
 #########################################################################
 
 ARG image=alpine/git
-ARG version=:1.0.20
-ARG digest=@sha256:f6f0b39d654c58a4474f458241b73ca7539bf511a4906450d5462c6a1fd004ca
+ARG version=:1.0.21
+ARG digest=sha256:8715680f27333935bb384a678256faf8e8832a5f2a0d4a00c9d481111c5a29c0
 
 FROM $image$version$digest AS clone
 
@@ -19,7 +19,7 @@ RUN git clone https://$hostname/$username/$project
 
 ###
 
-FROM alpine:3.12.0@sha256:a15790640a6690aa1730c38cf0a440e2aa44aaca9b0e8931a9f2b0d7cc90fd65 AS production
+FROM alpine:3.12.1@sha256:d7342993700f8cd7aba8496c2d0e57be0666e80b4c441925fc6f9361fa81d10e AS production
 
 ARG dir_old=/clone-folder/phpinfo/src
 ARG dir=/production-folder
