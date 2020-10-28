@@ -1,0 +1,65 @@
+name: kubernetes
+on: 
+  push:
+    branches: 
+      - dev
+jobs:
+  kubernetes:
+    env:
+      mode: kubernetes
+      repo: openshiftacademiaonline
+    runs-on: ubuntu-18.04
+    steps:
+      -
+        name: checkout
+        uses: actions/checkout@v2
+      -
+        name: test
+        run: |
+          set -x
+          
+          project=$(basename $GITHUB_REPOSITORY)
+          
+          version="1.18.10-00"
+          curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          echo deb http://apt.kubernetes.io/ kubernetes-xenial main | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+          sudo apt-get update
+          sudo apt-get install -y kubelet=$version kubeadm=$version kubectl=$version --allow-downgrades
+          ip=$( ip r | grep default | awk '{ print $9 }' )
+          sudo swapoff -a
+          
+          sudo kubeadm init --apiserver-advertise-address $ip --pod-network-cidr=192.168.0.0/16 --ignore-preflight-errors=all
+          
+          mkdir -p $HOME/.kube
+          sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
+          sudo chown $(id -u):$(id -g) $HOME/.kube/config
+          echo "source <(kubectl completion bash)" >> ~/.bashrc
+          
+          kubectl apply -f https://docs.projectcalico.org/v3.16/manifests/calico.yaml  
+          
+          master=$( kubectl get node | grep master | awk '{ print $1 }' )
+          kubectl taint node $master node-role.kubernetes.io/master:NoSchedule-
+          
+          for image in hasher rng webui worker
+            do
+              docker build -t $repo/$project-dev:latest-$image --no-cache $image/
+            done
+          docker image ls | grep $project              
+          
+          kubectl apply -R -f etc/$mode/
+          
+          for deploy in $project
+            do
+              while true
+                do
+                  sleep 10
+                  kubectl get deploy
+                  kubectl get deploy | grep "$deploy.*\([0-9]\)/\1" && break
+                done
+            done
+                        
+          while true
+            do
+              sleep 10
+              curl localhost:30000 | grep "PHP .* - phpinfo()" && break
+            done
