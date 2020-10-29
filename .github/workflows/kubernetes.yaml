@@ -43,7 +43,7 @@ jobs:
           docker build -t $repo/$project-dev:latest --no-cache .
           docker image ls | grep $project              
           
-          sed -i /imagePullPolicy/s/Always/Never/ etc/$mode/
+          sed -i /imagePullPolicy/s/Always/Never/ etc/$mode/*
           kubectl apply -R -f etc/$mode/
                   
           for deploy in $project
