@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
         -
-          #image: openshiftacademiaonline/phpinfo-dev:latest
-          image: secobau/phpinfo:latest
+          image: openshiftacademiaonline/phpinfo-dev:latest
           name: php
           ports:
             -
