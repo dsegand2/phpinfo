@@ -15,6 +15,7 @@ spec:
       containers:
         -
           image: openshiftacademiaonline/phpinfo-dev:latest
+          imagePullPolicy: Always
           name: php
           ports:
             -
