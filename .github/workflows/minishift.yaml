@@ -21,6 +21,7 @@ jobs:
           #sudo apt install qemu-kvm libvirt-daemon libvirt-daemon-system
           sudo apt install libvirt-bin qemu-kvm
           #sudo usermod -a -G libvirt $(whoami)
+          grep libvirt /etc/group
           sudo usermod -a -G libvirtd $(whoami)
           #newgrp libvirt
           newgrp libvirtd
