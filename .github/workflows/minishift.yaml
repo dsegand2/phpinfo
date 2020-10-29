@@ -36,5 +36,5 @@ jobs:
           rm minishift-1.34.3-linux-amd64.tar
           sudo mv minishift-1.34.3-linux-amd64/minishift /usr/local/bin
           echo $PATH
-          minishift version
-          minishift start
+          #minishift version
+          sudo minishift start
